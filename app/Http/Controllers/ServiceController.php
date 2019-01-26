@@ -3,10 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Service;
+use App\Equipment;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
+    /**
+    *
+    *   Changes for Index
+    *   Description :   
+    *   Last edited by : Firdausneonexxa
+    *
+    */
+        
+    public function api_getequipmentservices (Request $request,Equipment $equipment){
+        $parameters = $request->all();
+        $data = $equipment->services;
+        return response()->json([
+            'success' => 200,
+            'data' => $data
+        ]);
+    }
+        
     /**
      * Display a listing of the resource.
      *
@@ -22,9 +40,10 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Equipment $equipment)
     {
-        //
+        // show create service page
+        return view('services.create',compact('equipment'));
     }
 
     /**
@@ -33,9 +52,19 @@ class ServiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Equipment $equipment)
     {
         //
+        $params                 = $request->all();
+        $service                = new Service;
+        $service->name          = $params["name"];
+        $service->max_sample    = $params["max_sample"];
+        $service->fast_track    = $params["fast_track"];
+        $service->normal        = $params["normal"];
+        $service->equipment_id  = $equipment->id;
+        $service->user_id       = $params["pic"];
+        $service->save();
+        return redirect()->route('equipment.show',['equipment'=>$equipment->id]);
     }
 
     /**
@@ -44,9 +73,9 @@ class ServiceController extends Controller
      * @param  \App\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function show(Service $service)
+    public function show(Equipment $equipment, Service $service)
     {
-        //
+        return view('services.show',compact('equipment','service'));
     }
 
     /**
@@ -55,9 +84,10 @@ class ServiceController extends Controller
      * @param  \App\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function edit(Service $service)
+    public function edit(Equipment $equipment, Service $service)
     {
         //
+        return view('services.edit',compact('equipment','service'));
     }
 
     /**
@@ -67,9 +97,17 @@ class ServiceController extends Controller
      * @param  \App\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Service $service)
+    public function update(Request $request, Equipment $equipment, Service $service)
     {
-        //
+        $params                 = $request->all();
+        $service->name          = $params["name"];
+        $service->max_sample    = $params["max_sample"];
+        $service->fast_track    = $params["fast_track"];
+        $service->normal        = $params["normal"];
+        $service->equipment_id  = $equipment->id;
+        $service->user_id       = $params["pic"];
+        $service->save();
+        return redirect()->route('service.show',['equipment'=>$equipment->id,'service'=>$service->id]);
     }
 
     /**

@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -18,13 +18,23 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        .bodystyle{
+            background: url({{asset('images/utpbg.jpg')}}) no-repeat center center fixed; 
+              -webkit-background-size: cover;
+              -moz-background-size: cover;
+              -o-background-size: cover;
+              background-size: cover;
+        }
+    </style>
+    @stack('styles')
 </head>
-<body>
+<body class="bodystyle">{{-- style="background: url('/images/utpbg.jpg') no-repeat cover;" --}}
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel" style="background-color: #2E3338">
             <div class="container">
                 <a class="navbar-brand text-white" href="{{ url('/') }}">
-                    |&nbsp;{{ config('app.name', 'Laravel') }}
+                    <img style="max-width:100px;" src="{{asset('images/logoutp.png')}}">&nbsp;|&nbsp;{{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -33,7 +43,31 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{route('home')}}">Home</a>
+                        </li>
+                        @guest
+                        @else
+                            @switch(Auth::user()->role->id)
+                                @case(2)
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="{{route('application.index')}}">All Applications</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="{{route('calender.index')}}">Calender (IF)</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="{{route('system.index')}}">System</a>
+                                    </li>
+                                    @break
+                                @case(4)
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="{{route('booking.create')}}">New Booking</a>
+                                    </li>
+                                    @break
+                                @default
+                            @endswitch
+                        @endguest
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -76,5 +110,11 @@
             @yield('content')
         </main>
     </div>
+    <script>
+        $(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    @stack('scripts')
 </body>
 </html>

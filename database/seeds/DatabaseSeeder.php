@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,14 +11,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
-        $roles = [
-            ['id' => 1,'label' => 'Super Admin'],
-            ['id' => 2,'label' => 'Lab Admin'],
-            ['id' => 3,'label' => 'Staff'],
-            ['id' => 4,'label' => 'Student'],
-        ];
-		Role::insert($roles);
-        echo "Successfully seed roles "." \n";
+        $this->call(RolesTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
+        $this->call(SlotsTableSeeder::class);
+        $this->call(EquipmentsTableSeeder::class);
+        $this->call(ServicesTableSeeder::class);
+        $this->call(ModulesTableSeeder::class);
+        $this->call(SupervisorsTableSeeder::class);
     }
 }

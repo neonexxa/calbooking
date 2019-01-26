@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Equipment;
 use Illuminate\Http\Request;
+use Auth;
 
 class EquipmentController extends Controller
 {
@@ -14,7 +15,9 @@ class EquipmentController extends Controller
      */
     public function index()
     {
-        //
+        // show all equipment admin only
+        $equipments = Equipment::all();
+        return view('equipment.index',compact('equipments'));
     }
 
     /**
@@ -24,7 +27,8 @@ class EquipmentController extends Controller
      */
     public function create()
     {
-        //
+        // create equipment page admin only
+        return view('equipment.create');
     }
 
     /**
@@ -35,7 +39,12 @@ class EquipmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // store new equipment admin only
+        $params = $request->all();
+        $equipment = new Equipment;
+        $equipment->name = $params["name"];
+        $equipment->save();
+        return redirect()->route('equipment.index');
     }
 
     /**
@@ -47,6 +56,7 @@ class EquipmentController extends Controller
     public function show(Equipment $equipment)
     {
         //
+        return view('equipment.show',compact('equipment'));
     }
 
     /**
@@ -57,7 +67,8 @@ class EquipmentController extends Controller
      */
     public function edit(Equipment $equipment)
     {
-        //
+        // edit equipment admin only
+        return view('equipment.edit');
     }
 
     /**
@@ -69,7 +80,8 @@ class EquipmentController extends Controller
      */
     public function update(Request $request, Equipment $equipment)
     {
-        //
+        // update equipment admin only
+        return redirect()->route('equipment.index');
     }
 
     /**
@@ -80,6 +92,6 @@ class EquipmentController extends Controller
      */
     public function destroy(Equipment $equipment)
     {
-        //
+        return redirect()->route('equipment.index');
     }
 }
