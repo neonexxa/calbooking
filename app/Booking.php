@@ -22,4 +22,8 @@ class Booking extends Model
     {
         return $this->hasMany('App\Sample');
     }
+    public function application()
+    {
+       return $this->hasOne('App\Application');
+    }
 }

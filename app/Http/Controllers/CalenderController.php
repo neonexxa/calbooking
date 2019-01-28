@@ -19,7 +19,9 @@ class CalenderController extends Controller
         $parameters = $request->all();
         $now = Carbon::now();
         if (empty($parameters['date'])) {
+
             $parameters['dategenerated'] = Carbon::createFromDate($now->year, $now->month, $now->day);
+            $parameters['date'] = $parameters['dategenerated']->toDateString();
         }else{
             $date = explode("-", $parameters['date']);
             $parameters['dategenerated'] = Carbon::createFromDate($date[0], $date[1], $date[2]);

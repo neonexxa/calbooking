@@ -60,6 +60,11 @@
                                         <a class="nav-link text-white" href="{{route('system.index')}}">System</a>
                                     </li>
                                     @break
+                                @case(3)
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="{{route('calender.index')}}">Calender</a>
+                                    </li>
+                                    @break
                                 @case(4)
                                     <li class="nav-item">
                                         <a class="nav-link text-white" href="{{route('booking.create')}}">New Booking</a>

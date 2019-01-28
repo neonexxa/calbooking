@@ -14,4 +14,8 @@ class Service extends Model
     {
         return $this->belongsTo('App\Equipment');
     }
+    public function bookings()
+    {
+        return $this->hasMany('App\Booking');
+    }
 }
