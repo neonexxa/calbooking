@@ -7,7 +7,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      {!! Form::open(['route' => ['application.store',$booking->id], 'id' => 'select_slot_form']) !!}
+      {{-- {!! Form::open(['route' => ['application.store',$booking->id], 'id' => 'select_slot_form']) !!} --}}
       <div class="modal-body">
         <div class="form-group">
           <label for="day" class="col-form-label">Day:</label>
@@ -26,9 +26,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Chose different slot</button>
-        <button type="submit" class="btn btn-primary" id="select_slot_form_button">Confirm</button>
+        <button type="button" class="btn btn-primary" id="select_slot_form_button" data-value="confirm">Confirm</button>
       </div>
-      </form>
+      {{-- </form> --}}
     </div>
   </div>
 </div>

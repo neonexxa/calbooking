@@ -49,6 +49,17 @@
                         @guest
                         @else
                             @switch(Auth::user()->role->id)
+                                @case(1)
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="{{route('location.index')}}">Locations</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="{{route('equipment.index')}}">Equipments</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="{{route('role.index')}}">Roles</a>
+                                    </li>
+                                    @break
                                 @case(2)
                                     <li class="nav-item">
                                         <a class="nav-link text-white" href="{{route('application.index')}}">All Applications</a>

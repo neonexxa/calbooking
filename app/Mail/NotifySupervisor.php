@@ -33,7 +33,7 @@ class NotifySupervisor extends Mailable
      */
     public function build()
     {
-        return $this->from('example@example.com')
+        return $this->from('no-reply@kofixlabs.co')
                 // ->view('emails.notifysv');
                 ->markdown('emails.notifysv')
                 ->with([

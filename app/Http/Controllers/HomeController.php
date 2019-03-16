@@ -41,7 +41,7 @@ class HomeController extends Controller
             case 4:
                 # code...student
                 $bookings = Auth::user()->bookings;
-                return view('student.main',compact('bookings'));
+                return view('student.main_2',compact('bookings'));
                 break;
             default:
                 return view('home');

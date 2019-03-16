@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Role;
+use App\User;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -15,6 +16,9 @@ class RoleController extends Controller
     public function index()
     {
         //
+        $users = User::all();
+        $roles = Role::all();
+        return view('super_admin.role_manager',compact('users','roles'));
     }
 
     /**
@@ -67,9 +71,13 @@ class RoleController extends Controller
      * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, User $user)
     {
         //
+        $params = $request->all();
+        $user->role_id = $params['role_id'];
+        $user->save();
+        return redirect()->back();
     }
 
     /**

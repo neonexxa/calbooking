@@ -33,9 +33,18 @@ class SampleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$booking)
     {
         //
+        $param = $request->all();
+        $sample = new Sample;
+        $sample->type = $param["add_sample_type"];
+        $sample->name = $param["add_sample_name"];
+        $sample->method = $param["add_sample_method"];
+        $sample->remark = $param["add_sample_remark"];
+        $sample->booking_id = $booking;
+        $sample->save();
+        return redirect()->back();
     }
 
     /**
@@ -78,8 +87,10 @@ class SampleController extends Controller
      * @param  \App\Sample  $sample
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Sample $sample)
+    public function destroy($booking,Sample $sample)
     {
         //
+        $sample->delete();
+        return redirect()->back();
     }
 }

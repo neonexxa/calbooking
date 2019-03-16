@@ -20,6 +20,13 @@ class CreateLocationsTable extends Migration
             $table->string('status')->nullable();
             $table->timestamps();
         });
+        Schema::table('equipment', function (Blueprint $table) {
+            $table->unsignedInteger('location_id');
+            $table->foreign('location_id')
+                  ->references('id')
+                  ->on('locations')
+                  ->onDelete('cascade');
+        });
     }
 
     /**
@@ -29,6 +36,10 @@ class CreateLocationsTable extends Migration
      */
     public function down()
     {
+        Schema::table('equipment', function (Blueprint $table) {
+            $table->dropForeign(['location_id']);
+            $table->dropColumn('location_id');
+        });
         Schema::dropIfExists('locations');
     }
 }

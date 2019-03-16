@@ -56,8 +56,9 @@ class ApplicationController extends Controller
                     $applications = $applications->where('status',$params['status']);
                 }
                 
-                // end filter
+                // end filter groupBy('browser')
                 $applications = $applications->paginate(5);
+                
                 return view("lab_admin.application",compact('applications','params'));
                 break;
             
@@ -87,16 +88,21 @@ class ApplicationController extends Controller
     public function store(Request $request, Booking $booking)
     {
         $params = $request->all();
-        $date = explode('/', $params['select_slot_date_hidden']);
-        $startslot = Carbon::createFromDate($date[2], $date[1], $date[0]);
-        $application = new Application;
-        $application->slot_id = $params['select_slot_slot_id'];
-        $application->status = 1;
-        $application->start = $startslot;
-        $application->booking_id = $booking->id;
-        
-        if ($application->save()) {
-            # update status booking
+        $all_booked_slot = json_decode($params['all_slots_booked']);
+        $appsave = 0;
+        foreach ($all_booked_slot as $key => $value) {
+            $startslot = Carbon::createFromDate($value->slot_year, $value->slot_month, $value->slot_date);
+            $application = new Application;
+            $application->slot_id = $value->slot_id;
+            $application->status = 1;
+            $application->start = $startslot;
+            $application->booking_id = $booking->id;
+            if ($application->save()) {
+                $appsave += 1;
+            }
+        }
+        # update status booking
+        if ($appsave) {
             $booking->status = 3; // dah book time 
             $booking->save();
         }
@@ -136,15 +142,40 @@ class ApplicationController extends Controller
     public function update(Request $request, Application $application)
     {
         $params = $request->all();
-        $application->status = $params['status'];
-        if ($application->save()) {
+        $all_application_under_this_booking = $application->booking->applications;
+        // dd($all_application_under_this_booking,$application->booking);
+        $appsave = 0;
+        foreach ($all_application_under_this_booking as $key => $value) {
+            $value->status = $params['status'];
+            if($value->save()) {
+                $appsave += 1;
+            }
+        }
+        if ($appsave == $all_application_under_this_booking->count()) {
             $booking = Booking::find($application->booking->id);
-            $booking->status = 4; // done review
+            switch ($params['status']) {
+                case 2:
+                    $booking->status = 4; // approve
+                    break;
+                case 3:
+                    $booking->status = 5; // correction
+                    $booking->comment = (empty($params['comment']))? NULL : $params['comment']; // correction
+                    break;
+                case 4:
+                    $booking->status = 0; // reject
+                    break;
+                
+                default:
+                    # code...
+                    break;
+            }
+            
             $booking->save();
             return redirect()->back()->with('status', $application->booking->title.' status has been updated to '. $this->getApplicationStatusName($application) ) ;
         }else{
             return redirect()->back()->with('status', 'Opps something wrong') ;
         }
+        
     }
 
     /**

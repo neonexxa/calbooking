@@ -10,4 +10,8 @@ class Equipment extends Model
     {
         return $this->hasMany('App\Service');
     }
+    public function location()
+    {
+        return $this->belongsTo('App\Location');
+    }
 }

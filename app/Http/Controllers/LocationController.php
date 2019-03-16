@@ -15,6 +15,8 @@ class LocationController extends Controller
     public function index()
     {
         //
+        $locations = Location::all();
+        return view('super_admin.location',compact('locations'));
     }
 
     /**
@@ -69,7 +71,11 @@ class LocationController extends Controller
      */
     public function update(Request $request, Location $location)
     {
-        //
+        $param = $request->all();
+        $location->name = $param['location_name'];
+        $location->address = $param['location_address'];
+        $location->save();
+        return redirect()->back();
     }
 
     /**

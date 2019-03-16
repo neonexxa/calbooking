@@ -4,37 +4,37 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h4><a href="{{route('application.index')}}"><i class="az-arrow-left"></i></a>&nbsp;{{$application->booking->title}}</h4>
+            <h4><a href="{{route('booking.index')}}"><i class="az-arrow-left"></i></a>&nbsp;{{$booking->title}}</h4>
             <div class="card">
                 <div class="card-header">
-                    @switch($application->status)
-                    @case(1)
+                    @switch($booking->status)
+                    @case(3)
                         Pending for lab review
                         <a href="#" class="float-right btn btn-danger" onclick="event.preventDefault(); document.getElementById('reject-form').submit();">Reject</a> 
                         <a href="#" class="float-right btn btn-warning" data-toggle="modal" data-target="#commetncorrection">Correction</a>
                         <a href="#" class="float-right btn btn-success" onclick="event.preventDefault(); document.getElementById('approve-form').submit();">Accept</a> 
-                        {!! Form::open(['route' => ['application.update',$application->id], 'method' => 'put', 'style'=>'display: none;', 'id' => 'approve-form']) !!}
-                            <input type="hidden" name="status" value="2">
-                            @csrf
-                        </form>
-                        {!! Form::open(['route' => ['application.update',$application->id], 'method' => 'put', 'style'=>'display: none;', 'id' => 'reject-form']) !!}
+                        {!! Form::open(['route' => ['booking.update',$booking->id], 'method' => 'put', 'style'=>'display: none;', 'id' => 'approve-form']) !!}
                             <input type="hidden" name="status" value="4">
                             @csrf
                         </form>
-                        {!! Form::open(['route' => ['application.update',$application->id], 'method' => 'put', 'style'=>'display: none;', 'id' => 'correction-form']) !!}
-                            <input type="hidden" name="status" value="3">
+                        {!! Form::open(['route' => ['booking.update',$booking->id], 'method' => 'put', 'style'=>'display: none;', 'id' => 'reject-form']) !!}
+                            <input type="hidden" name="status" value="0">
+                            @csrf
+                        </form>
+                        {!! Form::open(['route' => ['booking.update',$booking->id], 'method' => 'put', 'style'=>'display: none;', 'id' => 'correction-form']) !!}
+                            <input type="hidden" name="status" value="5">
                             @csrf
                         </form>
                         @break
                     @default
-                        @switch ($application->status)
-                            @case(2)
+                        @switch ($booking->status)
+                            @case(4)
                                 <span class="text-success">Approved</span>
                                 @break
-                            @case(3)
+                            @case(5)
                                 <span class="text-warning">Correction</span>
                                 @break
-                            @case(4)
+                            @case(0)
                                 <span class="text-danger">Rejected</span>
                                 @break
                             
@@ -47,23 +47,23 @@
 
                 <div class="card-body">
                     @if (session('status'))
-                        @switch($application->status)
-                            @case(1)
+                        @switch($booking->status)
+                            @case(3)
                             <div class="alert alert-info" role="alert">
                                 {{ session('status') }}
                             </div>
                             @break
-                            @case(2)
+                            @case(4)
                             <div class="alert alert-success" role="alert">
                                 {{ session('status') }}
                             </div>
                             @break
-                            @case(3)
+                            @case(5)
                             <div class="alert alert-warning" role="alert">
                                 {{ session('status') }}
                             </div>
                             @break
-                            @case(4)
+                            @case(0)
                             <div class="alert alert-danger" role="alert">
                                 {{ session('status') }}
                             </div>
@@ -79,7 +79,7 @@
                           Name :   
                         </div>
                         <div class="col-md-9">
-                            {{ $application->booking->user->name }}
+                            {{ $booking->user->name }}
                         </div>
                     </div>
                     <div class="row">
@@ -87,7 +87,7 @@
                           ID :   
                         </div>
                         <div class="col-md-0">
-                            {{ $application->booking->user->matric_id }}
+                            {{ $booking->user->matric_id }}
                         </div>
                     </div>
                     <div class="row">
@@ -95,7 +95,7 @@
                           Contact :   
                         </div>
                         <div class="col-md-9">
-                            {{ $application->booking->user->contact }}
+                            {{ $booking->user->contact }}
                         </div>
                     </div>
                     <div class="row">
@@ -103,7 +103,7 @@
                           Project title :   
                         </div>
                         <div class="col-md-9">
-                            {{ $application->booking->title }}
+                            {{ $booking->title }}
                         </div>
                     </div>
                     <div class="row">
@@ -111,7 +111,7 @@
                           Cost Center :   
                         </div>
                         <div class="col-md-9">
-                            {{ $application->booking->name }}
+                            {{ $booking->name }}
                         </div>
                     </div>
                     <div class="row">
@@ -119,7 +119,7 @@
                           Supervisor :   
                         </div>
                         <div class="col-md-9">
-                            {{ $application->booking->supervisor->name }}
+                            {{ $booking->supervisor->name }}
                         </div>
                     </div>
                     <div class="row">
@@ -127,7 +127,7 @@
                           Supervisor email :   
                         </div>
                         <div class="col-md-9">
-                            {{ $application->booking->supervisor->email }}
+                            {{ $booking->supervisor->email }}
                         </div>
                     </div>
                     <div class="row">
@@ -135,12 +135,12 @@
                           Required Analysis :   
                         </div>
                         <div class="col-md-9">
-                            {{ $application->booking->service->name }}
+                            {{ $booking->service->name }}
                         </div>
                     </div>
                     <br>
                     <div class="row">
-                        @foreach($application->booking->samples as $sample)
+                        @foreach($booking->samples as $sample)
                             <div class="col-md-4">
                                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                                     <div class="card-header" style="padding: 0.1rem 1.25rem;">{{$sample->name}}</div>

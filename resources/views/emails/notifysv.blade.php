@@ -11,7 +11,7 @@ Supervisor review required, an application has been made!
 | Status        | {{$booking->user->name}} |
 | Department    | X |
 | Project       | {{$booking->title}} |
-| Cost          | X |
+| Cost Center   | {{$booking->name}} |
 | Supervisor    | {{$booking->supervisor->name }} |
 @endcomponent
 
@@ -26,7 +26,7 @@ Sample :
 @foreach($booking->samples as $key => $sample)
 | {{$key+1}}| {{$sample->type}} | {{$sample->name}} | {{$sample->method}} |
 @endforeach
-| | Total | Rm | |
+| | Total | Rm | {{$booking->samples->count()*$booking->service->normal}}|
 @endcomponent
 
 @component('mail::button', ['url' => route('booking.updatebyemail',['booking'=>$booking->id,'token'=>$token,'status'=>2]), 'color' => 'success'])

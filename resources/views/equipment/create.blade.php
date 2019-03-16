@@ -20,10 +20,23 @@
                                 <div class="col">
                                     Name : 
                                 </div>
+
                                 <div class="col-md-9">
                                     <input type="text" class="form-control" placeholder="name" name="name" required>
                                 </div>
                                 
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    Location :
+                                </div>
+                                <div class="col-md-9">
+                                    <select name="location_id" id="location_id" class="form-control">
+                                        @foreach(\App\Location::all() as $location)
+                                            <option value="{{$location->id}}">{{$location->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                             <br>
                             <button type="submit" class="btn btn-block btn-primary">+ Add Equipment</button>

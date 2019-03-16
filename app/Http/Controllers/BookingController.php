@@ -44,7 +44,6 @@ class BookingController extends Controller
             $calender['view']   = $params['view'];
             $craftedcarbon = Carbon::createFromDate($calender['year'], $calender['month'], $calender['date']);
         }
-        
         return view('booking.bookdate',compact('booking','calender','craftedcarbon'));
     }
         
@@ -53,9 +52,50 @@ class BookingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+      $params = $request->all();
+        switch (Auth::user()->role->id) {
+            case 2:
+                $bookings = Booking::latest();
+                // if got filter
+                // dd($bookings);
+                if (!empty($params['equipment'])) {
+                    $bookings = $bookings->whereHas('service', function ($query2) use ($params) {
+                                    $query2->whereHas('equipment', function ($query3) use ($params) {
+                                        $query3->where('id', '=', $params['equipment']);
+                                    });
+                                });
+                }
+                if (!empty($params['services'])) {
+                    $bookings = $bookings->whereHas('service', function ($query2) use ($params) {
+                                    $query2->where('id', '=', $params['services']);
+                                });
+                }
+                // if (!empty($params['staff'])) {
+                //     $applications = $applications->whereHas('booking', function ($query) use ($params) {
+                //         $query->whereHas('service', function ($query2) use ($params) {
+                //             $query2->whereHas('user', function ($query3) use ($params) {
+                //                 $query3->where('id', '=', $params['staff']);
+                //             });
+                //         });
+                //     });
+                // }
+                if (!empty($params['status'])) {
+                    $bookings = $bookings->where('status',$params['status']);
+                }
+                
+                // end filter groupBy('browser')
+                $bookings = $bookings->paginate(5);
+                
+                return view("lab_admin.booking",compact('bookings','params'));
+                break;
+            
+            default:
+                dd("not ready");
+                break;
+        }
     }
 
     /**
@@ -126,6 +166,7 @@ class BookingController extends Controller
     public function show(Booking $booking)
     {
         //
+      return view("lab_admin.each_booking",compact('booking'));
     }
 
     /**
@@ -136,7 +177,7 @@ class BookingController extends Controller
      */
     public function edit(Booking $booking)
     {
-        //
+        return view('booking.correction',compact('booking'));
     }
 
     /**
@@ -148,11 +189,69 @@ class BookingController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
-        //if correction/change of content booking status must set to 3
-        // $params = $request->all();
-        // $booking->status = $params['status'];
-        // $booking->save();
-        // return redirect()->back();
+        $params = $request->all();
+        if (!empty($params['from_correction'])) {
+            # code...
+            
+            switch ($params['from_correction']) {
+                case 'service_correction':
+                    $booking->samples()->delete();
+                    $booking->service_id = $params['service_id'];
+                    $booking->save();
+                    return redirect()->back();
+                    break;
+                case 'cost_center_correction':
+                    $booking->name = $params['costcenter'];
+                    $booking->save();
+                    return redirect()->back();
+                    break;
+                case 'resubmit_correction':
+                    $booking->status = $params['status'];
+                    $booking->save();
+                    return redirect()->route('home');
+                    break;
+                
+                default:
+                    # code...
+                    break;
+            }
+        }
+        $all_application_under_this_booking = $booking->applications;
+        // dd($all_application_under_this_booking,$application->booking);
+        $appsave = 0;
+        foreach ($all_application_under_this_booking as $key => $value) {
+            
+            switch ($params['status']) {
+                case 4:
+                  $value->status = 2;
+                    break;
+                case 5:
+                  $value->status = 3;
+                    break;
+                case 0:
+                  $value->status = 4; // reject
+                  break;
+                
+                default:
+                  # code...
+                  break;
+            }
+            if($value->save()) {
+                $appsave += 1;
+            }
+        }
+        if ($appsave == $all_application_under_this_booking->count()) {
+            $booking = Booking::find($booking->id);
+            $booking->status = $params['status'];
+            if ($params['status'] == 5) {
+              $booking->comment = (empty($params['comment']))? NULL : $params['comment']; // correction
+            }
+            
+            $booking->save();
+            return redirect()->back()->with('status', $booking->title.' status has been updated to '. $this->getBookingStatusName($booking->status) ) ;
+        }else{
+            return redirect()->back()->with('status', 'Opps something wrong') ;
+        }
     }
     /**
     *
@@ -211,7 +310,10 @@ class BookingController extends Controller
                 $status_label = 'correction';
                 break;
             case '4':
-                $status_label = 'done review';
+                $status_label = 'Completed';
+                break;
+            case '5':
+                $status_label = 'Need correction';
                 break;
             
             default:

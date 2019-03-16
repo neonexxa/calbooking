@@ -38,8 +38,8 @@ class ServicesTableSeeder extends Seeder
 		['equipment_id' => 8, 'user_id' => 21,'name' => 'Particle Size + Zeta Potential','fast_track'=>135,'normal'=>70],
 		['equipment_id' => 8, 'user_id' => 21,'name' => 'pH Titration','fast_track'=>165,'normal'=>85],
 		
-		['equipment_id' => 9, 'user_id' => 22,'name' => 'Flame (Detection limit: sub ppm)','fast_track'=>'45/element/sample','normal'=>'25/element/sample'],
-		['equipment_id' => 9, 'user_id' => 22,'name' => 'Graphite (Detection limit: sub ppb)','fast_track'=>'55/element/sample','normal'=>'30/element/sample'],
+		['equipment_id' => 9, 'user_id' => 22,'name' => 'Flame (Detection limit: sub ppm)','fast_track'=>45,'normal'=>25],
+		['equipment_id' => 9, 'user_id' => 22,'name' => 'Graphite (Detection limit: sub ppb)','fast_track'=>55,'normal'=>30],
 		
 		['equipment_id' => 10, 'user_id' => 24,'name' => 'GCMS','fast_track'=>170,'normal'=>85],
 		['equipment_id' => 10, 'user_id' => 24,'name' => 'With pyrolyzer','fast_track'=>210,'normal'=>105],

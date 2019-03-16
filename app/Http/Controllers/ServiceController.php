@@ -10,7 +10,7 @@ class ServiceController extends Controller
 {
     /**
     *
-    *   Changes for Index
+    *   Changes for api_getequipmentservices
     *   Description :   
     *   Last edited by : Firdausneonexxa
     *
@@ -24,6 +24,22 @@ class ServiceController extends Controller
             'data' => $data
         ]);
     }
+    /**
+    *
+    *   Changes for api_getserviceprice
+    *   Description :   
+    *   Last edited by : Firdausneonexxa
+    *
+    */
+        
+    public function api_getserviceprice (Request $request,Service $service){
+        $parameters = $request->all();
+        return response()->json([
+            'success' => 200,
+            'data' => $service
+        ]);
+    }
+        
         
     /**
      * Display a listing of the resource.

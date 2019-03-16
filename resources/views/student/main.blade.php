@@ -79,6 +79,39 @@
                                         </div>
                                     </div>
                                     @break
+                                @case(4)
+                                    <div class="row" style="margin-bottom: 5px">
+                                        <div class="col">
+                                            <div class="card border-success">
+                                              <div class="card-header text-success" style="padding:5px">Booking for {{$booking->title}}</div>
+                                              <div class="card-body text-success" style="padding:5px">
+                                                <p class="card-text m-0">Slot has been approve. 
+                                                </p>
+                                                <span class="badge badge-success float-left">(Completed)</span>
+                                                {{-- <span class="float-right">Processing time : 2 days left</span> --}}
+                                                
+                                              </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @break
+                                @case(5)
+                                    <div class="row" style="margin-bottom: 5px">
+                                        <div class="col">
+                                            <div class="card border-warning">
+                                              <div class="card-header text-warning" style="padding:5px">Booking for {{$booking->title}}</div>
+                                              <div class="card-body text-warning" style="padding:5px">
+                                                <p class="card-text m-0">Correction Needed!!. 
+                                                    <a href="{{route('booking.edit',['booking'=>$booking->id])}}" class=" pt-0 pb-0">Edit</a>
+                                                </p>
+                                                <span class="badge badge-warning float-left">(Important)</span>
+                                                {{-- <span class="float-right">Processing time : 2 days left</span> --}}
+                                                
+                                              </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @break
                                 @default
                                     <span>Something went wrong, please try again</span>
                             @endswitch

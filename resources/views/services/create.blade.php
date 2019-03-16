@@ -51,7 +51,7 @@
                                     PIC : 
                                 </div>
                                 <div class="col-md-10">
-                                    {{Form::select('pic', \App\User::where('role_id',4)->pluck('name','id'))}}
+                                    {{Form::select('pic', \App\User::where('role_id',3)->pluck('name','id'))}}
                                 </div>
                                 
                             </div>

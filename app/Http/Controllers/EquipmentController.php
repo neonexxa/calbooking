@@ -43,6 +43,7 @@ class EquipmentController extends Controller
         $params = $request->all();
         $equipment = new Equipment;
         $equipment->name = $params["name"];
+        $equipment->location_id = $params["location_id"];
         $equipment->save();
         return redirect()->route('equipment.index');
     }
@@ -81,7 +82,11 @@ class EquipmentController extends Controller
     public function update(Request $request, Equipment $equipment)
     {
         // update equipment admin only
-        return redirect()->route('equipment.index');
+        $params = $request->all();
+        $equipment->name = $params["equipment_name"];
+        $equipment->location_id = $params["location_id"];
+        $equipment->save();
+        return redirect()->back();
     }
 
     /**

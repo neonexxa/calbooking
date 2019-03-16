@@ -40,7 +40,7 @@
                                 Title : 
                             </div>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" placeholder="title" name="title" required>
+                                <input type="text" class="form-control" placeholder="title" name="title" id="project_title" required>
                             </div>
                             
                         </div>
@@ -49,7 +49,7 @@
                                 Cost Center : 
                             </div>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" placeholder="name" name="name" required>
+                                <input type="text" class="form-control" placeholder="name" name="name" id="project_cost_center" required>
                             </div>
                             
                         </div>
@@ -89,7 +89,7 @@
 								
                             </div>
                         </div>
-                        <button type="button" class="btn btn-info text-white" data-toggle="modal" data-target="#addsample" style="margin-bottom: 10px ">+ sample</button>
+                        <button type="button" class="btn btn-info text-white" data-toggle="modal" data-target="#addsample" style="margin-bottom: 10px " id="button_new_sample">+ sample</button>
                         <br>
                         <div class="row" id="sample_dom_location">
 
@@ -102,7 +102,7 @@
     <br>
     <div class="row justify-content-center">
         <div class="col-md-8">
-        	<button type="submit" class="btn btn-block btn-primary">+ Add Booking</button>
+        	<button type="button" class="btn btn-block btn-primary" id="addbookingbutton">+ Add Booking</button>
         </div>
     </div>
     {!! Form::close() !!}
@@ -111,6 +111,7 @@
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Open modal for @getbootstrap</button> --}}
 @include('modal.addsample')
 @include('modal.editsample')
+@include('modal.bookingsummary')
 @endsection
 @push('scripts')
 <script>
@@ -126,10 +127,16 @@
 
         let serviceoptions = '';
         data.data.forEach(function(item){
-        	serviceoptions += '<option value="'+item.id+'">'+item.name+'</option>';
+        	serviceoptions += '<option value="'+item.id+'"  smmax="'+item.max_sample+'" >'+item.name+' : (Max Sample '+item.max_sample+')</option>';
         });
         $('#service_id').empty();
         $('#service_id').append(serviceoptions);
+        if(parseInt(_.find(data.data, ["id", parseInt($("#service_id").val())]).max_sample)){
+            $("#button_new_sample").show()}
+        else{
+            $("#button_new_sample").hide();
+        }
+
         // off preloader
       }
     });
@@ -151,15 +158,38 @@
 
 	        let serviceoptions = '';
 	        data.data.forEach(function(item){
-	        	serviceoptions += '<option value="'+item.id+'">'+item.name+'</option>';
+	        	serviceoptions += '<option value="'+item.id+'" smmax="'+item.max_sample+'" >'+item.name+' : (Max Sample '+item.max_sample+')</option>';
 	        });
 	        $('#service_id').empty();
 	        $('#service_id').append(serviceoptions);
+            if(parseInt(_.find(data.data, ["id", parseInt($("#service_id").val())]).max_sample)){
+                $("#button_new_sample").show()}
+            else{
+                $("#button_new_sample").hide();
+            }
+            // if (item.max_sample == 0) {$("#button_new_sample").hide()}
 	        // off preloader
 	      }
 	    }); 
 	});
 
+    // onchange analysis type
+    $("#service_id").change(function () {
+        console.log($('option:selected', this).attr('smmax'));
+        if(parseInt($('option:selected', this).attr('smmax'))){
+            $("#button_new_sample").show()}
+        else{
+            $("#button_new_sample").hide();
+        }
+        if(sample_count >= parseInt($('option:selected', this).attr('smmax'))){
+            // delete yg lebih
+            $("#button_new_sample").hide();
+            console.log("lebih sample ", sample_count, parseInt($('option:selected', this).attr('smmax')))
+            for (var i = parseInt($('option:selected', this).attr('smmax')); i < sample_count; i++) {
+                delete_sample(i);
+            }
+        }
+    });
 	// show modal add
 	$('#add_sample_form').submit(function( event ) {
 		event.preventDefault();
@@ -174,6 +204,10 @@
 		$('#addsample').modal('hide');
 		write_sample_to_dom(samples);
 		$('#add_sample_form')[0].reset();
+        console.log("sample count after add form",sample_count);
+        if(sample_count >=parseInt($('#service_id option:selected').attr('smmax')) ){
+            $("#button_new_sample").hide();
+        }
 	});
 
 	// write sample ke dom
@@ -199,6 +233,51 @@
         $('#sample_dom_location').empty();
         $('#sample_dom_location').append(dom_samples);
 	}
+
+    function write_sample_to_summary(samples) {
+        // body...
+        let dom_samples = '';
+        dom_samples += '<table style="    width: -webkit-fill-available;">';
+        dom_samples += "  <tr>";
+        dom_samples += "    <th>#</th>";
+        dom_samples += "    <th>Sample Type|</th>";
+        dom_samples += "    <th>Sample Name|</th>";
+        dom_samples += "    <th>Method|</th>";
+        dom_samples += "  </tr>";
+        Object.keys(samples).forEach(function(item){
+          dom_samples += "<tr>";
+          dom_samples += "  <td></td>";
+          dom_samples += "  <td>"+samples[item]['sample_type']+"</td>";
+          dom_samples += "  <td>"+samples[item]['sample_name']+"</td>";
+          dom_samples += "  <td>"+samples[item]['sample_method']+"</td>";
+          dom_samples += "</tr>";
+        });
+        dom_samples += "<tr>";
+        dom_samples += "  <td></td>";
+        dom_samples += "  <td>Total</td>";
+        dom_samples += "  <td>RM</td>";
+        dom_samples += '  <td id="sample_total_cost"></td>';
+        dom_samples += "</tr>";
+        dom_samples += "</table>";
+        $('#summary_sample').empty();
+        $('#summary_sample').append(dom_samples);
+        GetBookingCost($("#service_id").val());
+    }
+    function GetBookingCost(serv_id) {
+        // body...
+        $.ajax({
+          type: 'GET',
+          headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+          url: '/api/getserviceprice/'+$("#service_id").val(),
+          // data: ajaxdata,
+          processData : false,
+          contentType  : false,
+          success: (data)=>{
+            console.log("service",data.data);
+            $("#sample_total_cost").append(data.data.normal*sample_count);
+          }
+        }); 
+    }
 
 	// show modal edit
 	$('#editsample').on('show.bs.modal', function (event) {
@@ -230,7 +309,7 @@
 		a_sample["sample_method"] = $('#edit_sample_method').val();
 		a_sample["sample_remark"] = $('#edit_sample_remark').val();
 		samples[$('#edit_sample_id').val()] = a_sample;
-		console.log(samples);
+		console.log("lol",samples,samples.length);
 		$('#editsample').modal('hide');
 		write_sample_to_dom(samples);
 	});
@@ -238,12 +317,19 @@
 	// delete plak
 	function delete_sample(key) {
 		delete samples[key];
-		console.log(samples);
+        sample_count -=1;
+        samples = _.filter(samples);
+		console.log("sample count after delete",sample_count, samples);
 		write_sample_to_dom(samples);
+        if(sample_count >=parseInt($('#service_id option:selected').attr('smmax')) ){
+            $("#button_new_sample").hide();
+        }else{
+            $("#button_new_sample").show();
+        }
 	}
 
 	// pastu add booking all to booking masukan je object samples to form input yg ade
-	$('#form_newbookings').submit(function( event ) {
+	$('#addbookingbutton').click(function( event ) {
 		// event.preventDefault();
 		console.log("im here");
 		if (Object.keys(samples).length != 0) {
@@ -252,7 +338,34 @@
 		    .attr('value', JSON.stringify(samples))
 		    .appendTo('#form_newbookings');
 		}
-		return true;
+
+        $("#summary_user_name").empty();
+        $("#summary_user_contact").empty();
+        $("#summary_user_status").empty();
+        $("#summary_dept").empty();
+        $("#summary_title").empty();
+        $("#summary_cost").empty();
+        $("#summary_supervisor_name").empty();
+        $("#summary_service_equipment_name").empty();
+        $("#summary_service_name").empty();
+
+        $("#summary_user_name").append("{{Auth::user()->name}}");
+        $("#summary_user_contact").append("{{Auth::user()->contact}}");
+        $("#summary_user_status").append("{{Auth::user()->name}}");
+        $("#summary_dept").append("N/A");
+        $("#summary_title").append($("#project_title").val());
+        $("#summary_cost").append($("#project_cost_center").val());
+        $("#summary_supervisor_name").append($("#supervisor_id option:selected").text());
+        $("#summary_service_equipment_name").append($("#equipment_id option:selected").text());
+        $("#summary_service_name").append($("#service_id option:selected").text());
+        write_sample_to_summary(samples);
+
+        $("#bookingsummary").modal('show');
+		// return true;
 	});
+    $('#booking_confirm_button').click(function(event) {
+        // body...
+        $('#form_newbookings').submit();
+    });
 </script>
 @endpush
