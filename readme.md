@@ -110,7 +110,7 @@ REDIS_PORT=6379
 MAIL_DRIVER=smtp
 MAIL_HOST=smtp.mailgun.org
 MAIL_PORT=587
-MAIL_USERNAME=postmaster@sandbox3b07bee9532941d2a26750badbc77974.mailgun.org
+MAIL_USERNAME=neo@subdomain.domain.org
 MAIL_PASSWORD=supervisor
 MAIL_ENCRYPTION=tls
 
