@@ -1,13 +1,5 @@
 
-::title :setting up Installing Laravel PHP Framework on Ubuntu 18.04 LTS for Apache services 
-
-::author :neonexxa
-
-::subauthor :neonexxa
-
-::last update :18/3/2019
-
-::project location : https://github.com/neonexxa/calbooking
+# Setting up Installing Laravel PHP Framework on Ubuntu 18.04 LTS for Apache services 
 
 ##### 1 ) Pre-Requisites
 Before proceeding with the installation, it's always a good idea to make sure your sources and existing software are updated. 
@@ -195,3 +187,25 @@ sudo a2enmod rewrite
 sudo service apache2 restart
 systemctl restart apache2.service
 ```
+
+## References
+
+I jumbled on alot of sites, hit the wall and crack my head, thanks to these sources i manage to regen and fight back with honour: 
+
+- **[laravel apache with php 7.2](https://www.howtoforge.com/tutorial/install-laravel-on-ubuntu-for-apache/)**
+- **[simple guide on apache2 mysql installation](https://www.vultr.com/docs/how-to-install-apache-mysql-and-php-on-ubuntu-18-04)**
+- **[laravel n mysql fresh install](https://linuxconfig.org/install-and-host-laravel-on-ubuntu-18-04-bionic-beaver-linux)**
+- **[Error establishing a database connection - mysql](https://www.ionos.com/community/hosting/mysql/error-establishing-a-database-connection-mysqlmariadb-error/)**
+- [Deploying laravel on nginx](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-laravel-application-with-nginx-on-ubuntu-16-04)
+
+## Contributing
+
+Author : [neonexxa](https://github.com/neonexxa)
+
+## Security Vulnerabilities
+
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+
+## License
+
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
