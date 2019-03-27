@@ -21,10 +21,10 @@
         <div class="col-md-1">
             @if($craftedcarbon->month < \Carbon\Carbon::now()->month+1)
                 @if(\Carbon\Carbon::now()->day >= 15)
-                <a href="/booking/regslot/{{$booking->id}}?view=month&month={{$craftedcarbon->month+1}}&year=2019" class="btn btn-primary">Next Month</a>
+                <a href="{{config('app.ajaxurl')}}/booking/regslot/{{$booking->id}}?view=month&month={{$craftedcarbon->month+1}}&year=2019" class="btn btn-primary">Next Month</a>
                 @endif
             @else
-            <a href="/booking/regslot/{{$booking->id}}?view=month&month={{\Carbon\Carbon::now()->month}}&year=2019" class="btn btn-primary">Prev Month</a>
+            <a href="{{config('app.ajaxurl')}}/booking/regslot/{{$booking->id}}?view=month&month={{\Carbon\Carbon::now()->month}}&year=2019" class="btn btn-primary">Prev Month</a>
             @endif
         </div>
         <div class="col-md-4">

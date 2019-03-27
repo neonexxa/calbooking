@@ -174,7 +174,7 @@
         let service_filter = ($('#filter_select_services').val() != 0)?'services='+$('#filter_select_services').val()+'&':'';
         let status_filter = ($('#filter_select_status').val() != 0)?'status='+$('#filter_select_status').val()+'&':'';
         console.log(equipment_filter,service_filter,status_filter);
-        location.href = '/application?'+ @if(!empty($params['page']))'page={{$params['page']}}&'+@endif equipment_filter+service_filter+status_filter;
+        location.href = '{{config('app.ajaxurl')}}/application?'+ @if(!empty($params['page']))'page={{$params['page']}}&'+@endif equipment_filter+service_filter+status_filter;
     }
 </script>
 @endpush

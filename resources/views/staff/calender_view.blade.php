@@ -194,7 +194,7 @@
     function search_with_filter_for_labadmin() {
         let date_filter = ($('#labadmin_selected_date').val() != 0)?'date='+$('#labadmin_selected_date').val()+'&':'';
         let service_filter = ($('#select_service_id').val() != 0)?'service_id='+$('#select_service_id').val()+'&':'';
-        location.href = '/calender?'+date_filter + service_filter @if(Auth::user()->role->id == 2) +'staff_id='+$('#select_staff_id').val() @endif;
+        location.href = '{{config('app.ajaxurl')}}/calender?'+date_filter + service_filter @if(Auth::user()->role->id == 2) +'staff_id='+$('#select_staff_id').val() @endif;
     }
 </script>
 @endpush
