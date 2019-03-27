@@ -118,7 +118,7 @@
 	$.ajax({
       type: 'GET',
       headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-      url: '{{config('app.url')}}/api/getequipmentservices/'+$("#equipment_id").val(),
+      url: '{{config('app.ajaxurl')}}/api/getequipmentservices/'+$("#equipment_id").val(),
       // data: ajaxdata,
       processData : false,
       contentType  : false,
@@ -149,7 +149,7 @@
 		$.ajax({
 	      type: 'GET',
 	      headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-	      url: '{{config('app.url')}}/api/getequipmentservices/'+$("#equipment_id").val(),
+	      url: '{{config('app.ajaxurl')}}/api/getequipmentservices/'+$("#equipment_id").val(),
 	      // data: ajaxdata,
 	      processData : false,
 	      contentType  : false,
@@ -268,7 +268,7 @@
         $.ajax({
           type: 'GET',
           headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-          url: '{{config('app.url')}}/api/getserviceprice/'+$("#service_id").val(),
+          url: '{{config('app.ajaxurl')}}/api/getserviceprice/'+$("#service_id").val(),
           // data: ajaxdata,
           processData : false,
           contentType  : false,
