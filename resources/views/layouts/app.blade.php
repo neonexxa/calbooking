@@ -7,20 +7,20 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.url', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ config('app.url').'/js/app.js' }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ config('app.url').'/css/app.css' }}" rel="stylesheet">
     <style>
         .bodystyle{
-            background: url({{asset('images/utpbg.jpg')}}) no-repeat center center fixed; 
+            background: url({{config('app.url').'images/utpbg.jpg'}}) no-repeat center center fixed; 
               -webkit-background-size: cover;
               -moz-background-size: cover;
               -o-background-size: cover;
@@ -34,7 +34,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel" style="background-color: #2E3338">
             <div class="container">
                 <a class="navbar-brand text-white" href="{{ url('/') }}">
-                    <img style="max-width:100px;" src="{{asset('images/logoutp.png')}}">&nbsp;|&nbsp;{{ config('app.name', 'Laravel') }}
+                    <img style="max-width:100px;" src="{{config('app.url').'/images/logoutp.png'}}">&nbsp;|&nbsp;{{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
