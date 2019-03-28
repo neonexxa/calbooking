@@ -29,7 +29,7 @@ class AddSupervisorToBooking extends Migration
      */
     public function down()
     {
-        Schema::table('booking', function (Blueprint $table) {
+        Schema::table('bookings', function (Blueprint $table) {
             //
             $table->dropForeign(['supervisor_id']);
             $table->dropColumn('supervisor_id');
