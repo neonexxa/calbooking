@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.url', 'Laravel') }}</title>
+    <title>CAL Lab Equipment Booking System (CALEBS)</title>
 
     <!-- Scripts -->
     <script src="{{ config('app.url').'/js/app.js' }}"></script>
@@ -34,7 +34,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel" style="background-color: #2E3338">
             <div class="container">
                 <a class="navbar-brand text-white" href="{{ url('/') }}">
-                    <img style="max-width:100px;" src="{{config('app.url').'/images/logoutp.png'}}">&nbsp;|&nbsp;{{ config('app.name', 'Laravel') }}
+                    <img style="max-width:100px;" src="{{config('app.url').'/images/logoutp.png'}}">&nbsp;|&nbsp; CAL Lab Equipment Booking System (CALEBS)
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
