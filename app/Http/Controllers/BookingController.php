@@ -293,7 +293,11 @@ class BookingController extends Controller
         $supervisor = Supervisor::find($booking->supervisor->id);
         # code...
         // Mail::to('firdaushishamuddin@gmail.com')->send(new NotifySupervisor);
-        Mail::to($supervisor->email)->send(new NotifySupervisorHtml($supervisor,$booking));
+        $result = Mail::to($supervisor->email)->send(new NotifySupervisorHtml($supervisor,$booking));
+        $fail = Mail::failures();
+        if(!empty($fail)) throw new \Exception('Could not send message to '.$fail[0]);
+
+        if(empty($result)) throw new \Exception('Email could not be sent.');
     }
     protected function getBookingStatusName($status)
     {

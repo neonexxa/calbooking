@@ -12,7 +12,7 @@ class SupervisorsTableSeeder extends Seeder
     public function run()
     {
         $supervisors = [
-            ['name' => 'Lect Neo','email' => 'neonazi@20minutemail.it'],
+            ['name' => 'Lect Neo','email' => 'firdaushishamuddin@gmail.com'],
         ];
         Supervisor::insert($supervisors);
         echo "Successfully seed supervisors "." \n";
