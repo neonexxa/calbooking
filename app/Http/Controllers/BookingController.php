@@ -294,10 +294,10 @@ class BookingController extends Controller
         # code...
         // Mail::to('firdaushishamuddin@gmail.com')->send(new NotifySupervisor);
         $result = Mail::to($supervisor->email)->send(new NotifySupervisorHtml($supervisor,$booking));
-        $fail = Mail::failures();
-        if(!empty($fail)) throw new \Exception('Could not send message to '.$fail[0]);
+        // $fail = Mail::failures();
+        // if(!empty($fail)) throw new \Exception('Could not send message to '.$fail[0]);
 
-        if(empty($result)) throw new \Exception('Email could not be sent.');
+        // if(empty($result)) throw new \Exception('Email could not be sent.');
     }
     protected function getBookingStatusName($status)
     {
