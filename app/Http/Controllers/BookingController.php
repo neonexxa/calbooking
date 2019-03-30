@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Carbon\Carbon;
 use App\Mail\NotifySupervisor;
+use App\Mail\NotifySupervisorHtml;
 use Illuminate\Support\Facades\Mail;
 class BookingController extends Controller
 {
@@ -292,7 +293,7 @@ class BookingController extends Controller
         $supervisor = Supervisor::find($booking->supervisor->id);
         # code...
         // Mail::to('firdaushishamuddin@gmail.com')->send(new NotifySupervisor);
-        Mail::to($supervisor->email)->send(new NotifySupervisor($supervisor,$booking));
+        Mail::to($supervisor->email)->send(new NotifySupervisorHtml($supervisor,$booking));
     }
     protected function getBookingStatusName($status)
     {

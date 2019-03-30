@@ -84,4 +84,22 @@ Route::group(['prefix'=>'/', 'middleware' => 'auth'], function() {
 	});
 });
 
+Route::get('mailablenotifysv/{booking}/{viewtype}', function ($booking,$viewtype) {
+	$booking = \App\Booking::find($booking);
+    $supervisor = \App\Supervisor::find($booking->supervisor->id);
+    switch ($viewtype) {
+    	case 'html':
+    		return new \App\Mail\NotifySupervisorHtml($supervisor,$booking);
+    		break;
+    	case 'markdown':
+    		# code...
+    		return new \App\Mail\NotifySupervisor($supervisor,$booking);
+    		break;
+    	
+    	default:
+    		# code...
+    		break;
+    }
+    
+});
 
