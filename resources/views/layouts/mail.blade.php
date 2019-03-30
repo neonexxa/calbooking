@@ -19,13 +19,7 @@
     <!-- Styles -->
     <link href="{{ config('app.url').'/css/app.css' }}" rel="stylesheet">
     <style>
-        .bodystyle{
-            background: url({{config('app.url').'/images/utpbg.jpg'}}) no-repeat center center fixed; 
-              -webkit-background-size: cover;
-              -moz-background-size: cover;
-              -o-background-size: cover;
-              background-size: cover;
-        }
+        
     </style>
     @stack('styles')
 </head>
