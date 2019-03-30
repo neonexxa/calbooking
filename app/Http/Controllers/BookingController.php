@@ -268,9 +268,14 @@ class BookingController extends Controller
         $orig_ex = explode("/", $original_plaintext);
         if ($orig_ex[1] == "UTP" && $orig_ex[0] == $booking->supervisor->email) {
             $params = $request->all();
-            $booking->status = $parameters['status'];
-            $booking->save();
-            dd("done update"); // redirect ke thank you page
+            if ($booking->status == 1) {
+                $booking->status = $parameters['status'];
+                $booking->save();
+                dd("done update"); // redirect ke thank you page
+            }else{
+                dd("supervisor already take action"); // redirect ke thank you page
+            }
+            
         }else{
             dd("not a valid supervisor"); // redirect ke 404
         }
