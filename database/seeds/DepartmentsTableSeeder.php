@@ -13,7 +13,12 @@ class DepartmentsTableSeeder extends Seeder
     {
         //
         $departments = [
-            // ['label' => 'ICT'],
+            ['label' => 'CHE'],
+            ['label' => 'CV'],
+            ['label' => 'EE'],
+            ['label' => 'FASD'],
+            ['label' => 'ME'],
+            ['label' => 'Others'],
         ];
         Department::insert($departments);
     }

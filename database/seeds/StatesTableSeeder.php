@@ -13,7 +13,11 @@ class StatesTableSeeder extends Seeder
     {
         //
         $states = [
-            // ['label' => ''],
+            ['label' => 'FYP'],
+            ['label' => 'MSc'],
+            ['label' => 'PhD'],
+            ['label' => 'RO'],
+            ['label' => 'Others'],
         ];
         State::insert($states);
     }
