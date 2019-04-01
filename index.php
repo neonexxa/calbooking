@@ -19,8 +19,8 @@ if ($uri !== '/' && file_exists(__DIR__.'/public'.$uri)) {
 	}else{
 		return false;	
 	}
-}elseif($uri == '/'){
-	header("Location: /index.php");
+}elseif($uri == '/' ||  $uri == '/calbooking/'){
+	header("Location:  ".$uri."/index.php");
 }else{
 	require_once __DIR__.'/public/index.php';	
 }
