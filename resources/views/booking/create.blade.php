@@ -369,7 +369,7 @@
         $("#summary_user_name").append("{{Auth::user()->name}}");
         $("#summary_user_contact").append("{{Auth::user()->contact}}");
         $("#summary_user_status").append("{{Auth::user()->name}}");
-        $("#summary_dept").append("N/A");
+        $("#summary_dept").append($("#department_id option:selected").text());
         $("#summary_title").append($("#project_title").val());
         $("#summary_cost").append($("#project_cost_center").val());
         $("#summary_supervisor_name").append($("#supervisor_id option:selected").text());
