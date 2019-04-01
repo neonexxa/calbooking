@@ -134,6 +134,8 @@ class BookingController extends Controller
         $booking->name              = $params["name"];
         $booking->service_id        = $params["service_id"];
         $booking->supervisor_id     = $params["supervisor_id"];
+        $booking->state_id          = $params["state_id"];
+        $booking->department_id     = $params["department_id"];
         $booking->status            = 1; // sebab skip email to sv
         
         if ($booking->save()) {
@@ -271,14 +273,14 @@ class BookingController extends Controller
             if ($booking->status == 1) {
                 $booking->status = $parameters['status'];
                 $booking->save();
-                dd("done update"); // redirect ke thank you page
+                $msg = "Thank you for your response. Done update booking status to ".$this->getBookingStatusName($parameters['status']);
             }else{
-                dd("supervisor already take action"); // redirect ke thank you page
+                $msg = "Opps. You already take action";
             }
-            
         }else{
-            dd("not a valid supervisor"); // redirect ke 404
+            $msg = "Opps. You do not have authenticated access";
         }
+        return redirect()->back()->with('status', $msg) ;
         
     }
         

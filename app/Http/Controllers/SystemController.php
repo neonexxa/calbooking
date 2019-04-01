@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Application;
 use App\Equipment;
+use App\Supervisor;
 use App\Service;
 use App\Slot;
 use App\Module;
@@ -128,7 +129,6 @@ class SystemController extends Controller
 
         		return view('lab_admin.ed_slot',compact('totalbookingperslot','todaybookedslot','params','fkbs'));
         		break;
-        	
         	default:
         		# code...
         		break;

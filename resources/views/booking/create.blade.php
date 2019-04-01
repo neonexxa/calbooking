@@ -32,7 +32,7 @@
                         		Supervisor :
                         	</div>
                         	<div class="col-md-8">
-                        		{{Form::select('supervisor_id', \App\Supervisor::all()->pluck('name','id'), null, ['id'=>'supervisor_id'])}}
+                        		{{Form::select('supervisor_id', \App\Supervisor::all()->pluck('name','id'), null, ['id'=>'supervisor_id','class'=>'js-example-basic-single'])}}
                         	</div>
                         </div>
                         <div class="row">
@@ -52,6 +52,22 @@
                                 <input type="text" class="form-control" placeholder="name" name="name" id="project_cost_center" required>
                             </div>
                             
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                Status :
+                            </div>
+                            <div class="col-md-8">
+                                {{Form::select('state_id', \App\State::all()->pluck('label','id'), null, ['id'=>'state_id','required'=>true])}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                Department :
+                            </div>
+                            <div class="col-md-8">
+                                {{Form::select('department_id', \App\Department::all()->pluck('label','id'), null, ['id'=>'department_id','required'=>true])}}
+                            </div>
                         </div>
                         @if(Auth::user()->role->id != 4)  {{--  if not student--}}
                         {{-- request student id/ matric number --}}
@@ -115,6 +131,7 @@
 @endsection
 @push('scripts')
 <script>
+    $('.js-example-basic-single').select2();
 	$.ajax({
       type: 'GET',
       headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},

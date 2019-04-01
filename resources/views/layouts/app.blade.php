@@ -11,7 +11,10 @@
 
     <!-- Scripts -->
     <script src="{{ config('app.url').'/js/app.js' }}"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+ 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -58,6 +61,12 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link text-white" href="{{route('role.index')}}">Roles</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="{{route('state.index')}}">Student Status</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="{{route('department.index')}}">Dept.</a>
                                     </li>
                                     @break
                                 @case(2)

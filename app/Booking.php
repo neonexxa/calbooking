@@ -18,6 +18,14 @@ class Booking extends Model
     {
         return $this->belongsTo('App\Supervisor');
     }
+    public function state()
+    {
+        return $this->belongsTo('App\State');
+    }
+    public function department()
+    {
+        return $this->belongsTo('App\Department');
+    }
     public function samples()
     {
         return $this->hasMany('App\Sample');

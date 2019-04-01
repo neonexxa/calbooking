@@ -33,6 +33,9 @@ Route::group(['prefix'=>'admin', 'middleware' => 'auth'], function() {
 		Route::post('application/{application}','SystemController@transferapplicationbooking')->name('system.transferapplicationbooking');
 		Route::post('block/{module}','BlockController@store')->name('system.blockingslot');
 	});	
+	Route::resource('supervisor','SupervisorController');
+	Route::resource('state','StateController');
+	Route::resource('department','DepartmentController');
 });
 /*
 |--------------------------------------------------------------------------

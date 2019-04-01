@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Supervisor;
+use App\Department;
 use Illuminate\Http\Request;
 
-class SupervisorController extends Controller
+class DepartmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class SupervisorController extends Controller
     public function index()
     {
         //
-        $supervisors = Supervisor::all();
-        return view('supervisor.index',compact('supervisors'));
+        $departments = Department::all();
+        return view('department.index',compact('departments'));
     }
 
     /**
@@ -27,7 +27,7 @@ class SupervisorController extends Controller
     public function create()
     {
         //
-        return view('supervisor.create');
+        return view('department.create');
     }
 
     /**
@@ -40,20 +40,19 @@ class SupervisorController extends Controller
     {
         //
         $params = $request->all();
-        $supervisor = new Supervisor;
-        $supervisor->name = $params["name"];
-        $supervisor->email = $params["email"];
-        $supervisor->save();
-        return redirect()->route('supervisor.index');
+        $department = new Department;
+        $department->label = $params["label"];
+        $department->save();
+        return redirect()->route('department.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Supervisor  $supervisor
+     * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function show(Supervisor $supervisor)
+    public function show(Department $department)
     {
         //
     }
@@ -61,10 +60,10 @@ class SupervisorController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Supervisor  $supervisor
+     * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function edit(Supervisor $supervisor)
+    public function edit(Department $department)
     {
         //
     }
@@ -73,29 +72,28 @@ class SupervisorController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Supervisor  $supervisor
+     * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Supervisor $supervisor)
+    public function update(Request $request, Department $department)
     {
         //
         $params = $request->all();
-        $supervisor->name = $params["name"];
-        $supervisor->email = $params["email"];
-        $supervisor->save();
+        $department->label = $params["label"];
+        $department->save();
         return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Supervisor  $supervisor
+     * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Supervisor $supervisor)
+    public function destroy(Department $department)
     {
         //
-        $supervisor->delete();
-        return redirect()->route('supervisor.index');
+        $department->delete();
+        return redirect()->route('department.index');
     }
 }

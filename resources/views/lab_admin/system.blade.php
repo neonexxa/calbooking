@@ -27,6 +27,12 @@
                                 <p>Managing slot</p>
                             </a>
                         </div>
+                        <div class="col-md-2 text-center">
+                            <a href="{{route('supervisor.index')}}">
+                                <p><i class="az-sliders system_option"></i></p>
+                                <p>SV Directory</p>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

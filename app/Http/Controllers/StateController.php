@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Supervisor;
+use App\State;
 use Illuminate\Http\Request;
 
-class SupervisorController extends Controller
+class StateController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class SupervisorController extends Controller
     public function index()
     {
         //
-        $supervisors = Supervisor::all();
-        return view('supervisor.index',compact('supervisors'));
+        $states = State::all();
+        return view('state.index',compact('states'));
     }
 
     /**
@@ -27,7 +27,7 @@ class SupervisorController extends Controller
     public function create()
     {
         //
-        return view('supervisor.create');
+        return view('state.create');
     }
 
     /**
@@ -40,20 +40,19 @@ class SupervisorController extends Controller
     {
         //
         $params = $request->all();
-        $supervisor = new Supervisor;
-        $supervisor->name = $params["name"];
-        $supervisor->email = $params["email"];
-        $supervisor->save();
-        return redirect()->route('supervisor.index');
+        $state = new State;
+        $state->label = $params["label"];
+        $state->save();
+        return redirect()->route('state.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Supervisor  $supervisor
+     * @param  \App\State  $state
      * @return \Illuminate\Http\Response
      */
-    public function show(Supervisor $supervisor)
+    public function show(State $state)
     {
         //
     }
@@ -61,10 +60,10 @@ class SupervisorController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Supervisor  $supervisor
+     * @param  \App\State  $state
      * @return \Illuminate\Http\Response
      */
-    public function edit(Supervisor $supervisor)
+    public function edit(State $state)
     {
         //
     }
@@ -73,29 +72,28 @@ class SupervisorController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Supervisor  $supervisor
+     * @param  \App\State  $state
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Supervisor $supervisor)
+    public function update(Request $request, State $state)
     {
         //
         $params = $request->all();
-        $supervisor->name = $params["name"];
-        $supervisor->email = $params["email"];
-        $supervisor->save();
+        $state->label = $params["label"];
+        $state->save();
         return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Supervisor  $supervisor
+     * @param  \App\State  $state
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Supervisor $supervisor)
+    public function destroy(State $state)
     {
+        $state->delete();
+        return redirect()->route('state.index');
         //
-        $supervisor->delete();
-        return redirect()->route('supervisor.index');
     }
 }
