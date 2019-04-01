@@ -273,14 +273,17 @@ class BookingController extends Controller
             if ($booking->status == 1) {
                 $booking->status = $parameters['status'];
                 $booking->save();
+                $status = 'success';
                 $msg = "Thank you for your response. Done update booking status to ".$this->getBookingStatusName($parameters['status']);
             }else{
+                $status = 'warning';
                 $msg = "Opps. You already take action";
             }
         }else{
+            $status = 'danger';
             $msg = "Opps. You do not have authenticated access";
         }
-        return redirect()->back()->with('status', $msg) ;
+        return view('status.booking_response',compact('status','msg'));
         
     }
         

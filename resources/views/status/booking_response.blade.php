@@ -8,11 +8,9 @@
                 <div class="card-header">Notice</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+                    <div class="alert alert-{{$status}}" role="alert">
+                        {{ $msg }}
+                    </div>
                 </div>
             </div>
         </div>
