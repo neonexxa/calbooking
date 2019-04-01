@@ -71,6 +71,7 @@ Route::group(['prefix'=>'api'], function() {
 */
 	
 // student accesible api
+Route::get('bookingupdatebyemail/{booking}','BookingController@updatebyemail')->name('booking.updatebyemail');
 Route::group(['prefix'=>'/', 'middleware' => 'auth'], function() {
 
 	Route::resource('application','ApplicationController')->except([
@@ -78,7 +79,7 @@ Route::group(['prefix'=>'/', 'middleware' => 'auth'], function() {
 				]);
 	Route::get('booking/regslot/{booking}','BookingController@regslot')->name('booking.regslot');
 	Route::resource('booking','BookingController');
-	Route::get('bookingupdatebyemail/{booking}','BookingController@updatebyemail')->name('booking.updatebyemail');
+	
 	Route::group(['prefix'=>'booking/{booking}', 'middleware' => 'auth'], function() {
 		Route::resource('sample','SampleController');
 		Route::resource('application','ApplicationController')->only([
