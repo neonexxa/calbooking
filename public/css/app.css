@@ -1,10 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);@font-face {
   font-family: 'azry-icon';
-  src:  url(/fonts/vendor/azry-icon/scss/azry-icon.eot?02d42ae415910fbbf12c7439db1aae74);
-  src:  url(/fonts/vendor/azry-icon/scss/azry-icon.eot?02d42ae415910fbbf12c7439db1aae74#iefix) format('embedded-opentype'),
-    url(/fonts/vendor/azry-icon/scss/azry-icon.ttf?0e894fe2f56dba9f16932c82386be654) format('truetype'),
-    url(/fonts/vendor/azry-icon/scss/azry-icon.woff?d81967e7f1ad4d70acbeaaebf29d971a) format('woff'),
-    url(/fonts/vendor/azry-icon/scss/azry-icon.svg?7a70b02df1be2182345dd39a18132c93#azry-icon) format('svg');
+  src:  url(/calbooking/public/fonts/vendor/azry-icon/scss/azry-icon.eot?02d42ae415910fbbf12c7439db1aae74);
+  src:  url(/calbooking/public/fonts/vendor/azry-icon/scss/azry-icon.eot?02d42ae415910fbbf12c7439db1aae74#iefix) format('embedded-opentype'),
+    url(/calbooking/public/fonts/vendor/azry-icon/scss/azry-icon.ttf?0e894fe2f56dba9f16932c82386be654) format('truetype'),
+    url(/calbooking/public/fonts/vendor/azry-icon/scss/azry-icon.woff?d81967e7f1ad4d70acbeaaebf29d971a) format('woff'),
+    url(/calbooking/public/fonts/vendor/azry-icon/scss/azry-icon.svg?7a70b02df1be2182345dd39a18132c93#azry-icon) format('svg');
   font-weight: normal;
   font-style: normal;
 }
